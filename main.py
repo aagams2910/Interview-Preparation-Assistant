@@ -79,7 +79,13 @@ else:
         if turn["feedback"]:
             st.markdown(f"**Feedback:** {turn['feedback']}")
         st.markdown("---")
-    
+
+try:
+    first_question = generate_interview_question(job_desc)
+except OpenAI.RateLimitError as e:
+    st.error("Rate limit exceeded: please check your plan and billing details.")
+    st.stop()
+
 current_turn = st.session_state.current_turn
 if st.session_state.conversation and current_turn < len(st.session_state.conversation):
     if st.session_state.conversation[current_turn]["answer"] is None:
