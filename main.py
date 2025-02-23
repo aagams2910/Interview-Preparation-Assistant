@@ -1,5 +1,5 @@
 import os
-# Disable oneDNN log messages by settenvironm variable before any TensorFlow or related impor
+# Disable oneDNN log messages by settenvironm variable before any TensorFlow or related impo
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 import streamlit as st
