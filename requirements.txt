@@ -1,6 +1,6 @@
 streamlit
 langchain
-langchain-google
+langchain-google-genai
 langchain-communinty
 os
 dotenv
