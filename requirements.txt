@@ -1,5 +1,5 @@
 streamlit
 langchain
 langchain-google-genai
-langchain-communinty
+langchain-community
 dotenv
