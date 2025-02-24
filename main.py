@@ -1,10 +1,8 @@
-import os
 import streamlit as st
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 import google.generativeai as genai
-import os
 from dotenv import load_dotenv
 
 # Load environment variables (e.g., GOOGLE_API_KEY)
