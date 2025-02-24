@@ -5,7 +5,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-# Load environment variables (e.g., GOOGLE_API_KEY)
 load_dotenv()
 
 st.set_page_config(page_title="Interview Question Generator")
@@ -32,7 +31,8 @@ Your questions should help assess a candidate's suitability for the role.
 '''
 
 # Retrieve the API key from Streamlit secrets
-api_key = st.secrets["GOOGLE_API_KEY"]
+# api_key = st.secrets["GOOGLE_API_KEY"]
+api_key="AIzaSyBqmOTk3yyHcjqwPU3BNiwb57JjcJzT2yc"
 
 def get_interview_questions(job_profile_text):
     # Configure the Google Generative AI library with the API key

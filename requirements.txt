@@ -2,5 +2,4 @@ streamlit
 langchain
 langchain-google-genai
 langchain-communinty
-os
 dotenv
