@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+import os
+# Disable oneDNN log messages by settenvironm variable before any TensorFlow or related imp
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
+>>>>>>> 30978d828e1da1b1b2c04b6346bdd7fb3f7f7313
 import streamlit as st
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
