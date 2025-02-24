@@ -1,29 +1,58 @@
-import os
-# Disable oneDNN log messages by setting the environment variable before any TensorFlow or related imports
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-
 import streamlit as st
-from transformers import pipeline
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+from langchain_google_genai import ChatGoogleGenerativeAI
+import google.generativeai as genai
+import os
+from dotenv import load_dotenv
 
-# Initialize the text-generation pipeline with GPT-Neo-2.7B
-generator = pipeline('text-generation', model='EleutherAI/gpt-neo-2.7B')
+# Load environment variables (e.g., GOOGLE_API_KEY)
+load_dotenv()
 
-st.title("Interview Preparation Assistant Bot")
+st.set_page_config(page_title="Interview Question Generator")
+st.title("Interview Question Generator")
 
-# Input field for the job role
-job_role = st.text_input("Enter the job role", "")
+# Text area for the user to provide the job profile text
+job_profile_text = st.text_area("Paste the Job Profile Text Here:")
 
-if st.button("Generate Interview Prep"):
-    if not job_role.strip():
-        st.error("Please provide a valid job role.")
-    else:
-        st.info("Generating interview preparation content...")
-        prompt = (
-            f"Act as an interview preparation assistant. "
-            f"Provide a list of common interview questions and well-explained sample answers "
-            f"for the position of {job_role}. Also include some tips on how to approach each question."
-        )
-        # Generate the content using the text-generation pipeline
-        output = generator(prompt, max_length=500, do_sample=True, temperature=0.7)
-        st.success("Interview Preparation Content:")
-        st.write(output[0]['generated_text'])
+# Define the prompt template to generate interview questions based on the job profile
+prompt_template = '''
+You are an expert interviewer specialized in designing interview questions for specific job roles.
+Based on the job profile description provided below, generate a list of interview questions that cover both technical and behavioral aspects.
+Your questions should help assess a candidate's suitability for the role.
+
+### Job Profile:
+{job_profile_text}
+
+### Interview Questions:
+1.
+2.
+3.
+4.
+5.
+'''
+
+# Retrieve the API key from Streamlit secrets
+api_key = st.secrets["GOOGLE_API_KEY"]
+
+def get_interview_questions(job_profile_text):
+    # Configure the Google Generative AI library with the API key
+    genai.configure(api_key=api_key)
+    # Initialize the LLM with the Gemini‑pro model
+    llm = ChatGoogleGenerativeAI(model='gemini-pro')
+    # Create the prompt using the job profile text
+    prompt = PromptTemplate(
+        input_variables=["job_profile_text"],
+        template=prompt_template
+    )
+    # Create the LLMChain to run the prompt with the LLM
+    chain = LLMChain(llm=llm, prompt=prompt)
+    # Run the chain to generate the interview questions
+    response = chain.run({"job_profile_text": job_profile_text})
+    return response
+
+# When the button is pressed and job profile text is provided, generate and display questions
+if st.button("Generate Interview Questions") and job_profile_text.strip() != "":
+    questions = get_interview_questions(job_profile_text)
+    st.write("### Generated Interview Questions:")
+    st.write(questions)
