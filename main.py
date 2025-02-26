@@ -32,7 +32,7 @@ Your questions should help assess a candidate's suitability for the role.
 
 # Retrieve the API key from Streamlit secrets
 # api_key = st.secrets["GOOGLE_API_KEY"]
-api_key="AIzaSyBqmOTk3yyHcjqwPU3BNiwb57JjcJzT2yc"
+api_key=""
 
 def get_interview_questions(job_profile_text):
     # Configure the Google Generative AI library with the API key
