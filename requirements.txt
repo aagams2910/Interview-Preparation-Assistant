@@ -4,3 +4,7 @@ langchain-google-genai
 langchain-community
 dotenv
 google-generativeai
+PyPDF2
+pandas
+streamlit-tags
+fpdf
